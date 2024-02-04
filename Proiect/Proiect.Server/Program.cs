@@ -1,7 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using Proiect.Helpers.Extensions;
+using Proiect.Data;
+using Proiect.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ProiectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddRepositories();
+builder.Services.AddServices();
+builder.Services.AddHelpers();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -18,6 +28,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRouting();
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 

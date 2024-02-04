@@ -19,7 +19,7 @@ namespace Proiect.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Test(UserLoginDto userLoginDto)
+        public async Task<IActionResult> Test([FromQuery]UserLoginDto userLoginDto)
         {
             return Ok("Users");
         }

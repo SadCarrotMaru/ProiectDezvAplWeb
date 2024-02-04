@@ -1,7 +1,45 @@
 import { useEffect, useState } from 'react';
+import LoginForm from './components/LoginForm'; // Adjust the path accordingly
+import RegistrationForm from './components/RegistrationForm'; // Adjust the path accordingly
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
+} from "react-router-dom";
 import './App.css';
 
 function App() {
+
+    <Router>
+        <Routes>
+            <Route
+                exact
+                path="/"
+                element={<App />}
+            />
+
+            <Route
+                path="/login"
+                element={<LoginForm />}
+            />
+
+            <Route
+                path="/registration"
+                element={<RegistrationForm />}
+            />
+
+            {/* If any route mismatches the upper 
+          route endpoints then, redirect triggers 
+          and redirects app to home component with to="/" */}
+            {/* <Redirect to="/" /> */}
+            <Route
+                path="*"
+                element={<Navigate to="/" />}
+            />
+        </Routes>
+    </Router>
+
     const [forecasts, setForecasts] = useState();
 
     useEffect(() => {
@@ -31,18 +69,33 @@ function App() {
             </tbody>
         </table>;
 
+    const redirectToLogin = () => {
+        window.location.href = '/login';
+    };
+
+    const redirectToRegistration = () => {
+        window.location.href = '/registration';
+    };
+
+
     return (
         <div>
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
+
+            <h2> Login aici poate intr-o zi?</h2>
+            <button onClick={redirectToLogin}>Login</button>
+            <button onClick={redirectToRegistration}>Registration</button>
         </div>
+
     );
     
     async function populateWeatherData() {
         const response = await fetch('weatherforecast');
         const data = await response.json();
         setForecasts(data);
+
     }
 }
 
