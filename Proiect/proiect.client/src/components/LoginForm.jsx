@@ -5,6 +5,7 @@ const LoginForm = () => {
         userName: '',
         password: '',
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -13,11 +14,37 @@ const LoginForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        console.log(formData);
 
-        // Handle login logic 
-        console.log('Login data:', formData);
+        try {
+            const response = await fetch('http://localhost:7058/Users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                // Assuming your API returns some kind of success message or token
+                const data = await response.json();
+                console.log('Login successful:', data);
+
+                // Redirect to the home page after successful login
+                history.push('/home');
+            } else {
+                console.log('Login failed');
+                // Handle login failure, you can show an error message or handle it as needed
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            // Handle network errors or other issues
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -42,7 +69,9 @@ const LoginForm = () => {
                 />
             </label>
             <br />
-            <button type="submit">Login</button>
+            <button type="submit" disabled={loading}>
+                {loading ? 'Logging in...' : 'Login'}
+            </button>
         </form>
     );
 };

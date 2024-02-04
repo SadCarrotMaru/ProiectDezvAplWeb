@@ -5,14 +5,14 @@ using Proiect.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ProiectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddHelpers();
-builder.Services.AddControllers();
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

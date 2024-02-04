@@ -29,6 +29,7 @@ namespace Proiect.Controllers
         public async Task<IActionResult> Login(UserLoginDto userLoginDto)
         {
             var response = await _userService.Login(userLoginDto);
+            Console.WriteLine(response);
 
             if (response == null)
             {
