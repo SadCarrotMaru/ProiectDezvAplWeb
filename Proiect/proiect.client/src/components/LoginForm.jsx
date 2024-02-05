@@ -6,6 +6,7 @@ const LoginForm = () => {
         password: '',
     });
     const [loading, setLoading] = useState(false);
+    const [loginFailed, setLoginFailed] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -17,10 +18,10 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        console.log(formData);
+        setLoginFailed(false); // Reset loginFailed state before each login attempt
 
         try {
-            const response = await fetch('http://localhost:7058/Users/login', {
+            const response = await fetch('users/login', {    //https://localhost:7058/Users/login
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,15 +30,13 @@ const LoginForm = () => {
             });
 
             if (response.ok) {
-                // Assuming your API returns some kind of success message or token
                 const data = await response.json();
                 console.log('Login successful:', data);
-
                 // Redirect to the home page after successful login
                 history.push('/home');
             } else {
                 console.log('Login failed');
-                // Handle login failure, you can show an error message or handle it as needed
+                setLoginFailed(true); // Set loginFailed to true on login failure
             }
         } catch (error) {
             console.error('Error during login:', error);
@@ -49,6 +48,13 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            {loginFailed && (
+                <div>
+                    <p>Login failed, please try again.</p>
+                    <img src="https://media.tenor.com/5JoCWjXyrXcAAAAM/poro-stare.gif" alt="Failure GIF" />
+                </div>
+            )}
+
             <label>
                 Username:
                 <input
@@ -72,6 +78,7 @@ const LoginForm = () => {
             <button type="submit" disabled={loading}>
                 {loading ? 'Logging in...' : 'Login'}
             </button>
+
         </form>
     );
 };
