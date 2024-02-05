@@ -19,7 +19,7 @@ const RegistrationForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Handle registration logic
+        // Handle registration logic -- nu merge leg cu baza de data din cauza la cors deci nu mai dau handle 
         console.log('Registration data:', formData);
     };
 

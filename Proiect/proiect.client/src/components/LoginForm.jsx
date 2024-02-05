@@ -18,7 +18,7 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setLoginFailed(false); // Reset loginFailed state before each login attempt
+        setLoginFailed(false); 
 
         try {
             const response = await fetch('users/login', {    //https://localhost:7058/Users/login
@@ -32,15 +32,13 @@ const LoginForm = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Login successful:', data);
-                // Redirect to the home page after successful login
                 history.push('/home');
             } else {
                 console.log('Login failed');
-                setLoginFailed(true); // Set loginFailed to true on login failure
+                setLoginFailed(true); 
             }
         } catch (error) {
             console.error('Error during login:', error);
-            // Handle network errors or other issues
         } finally {
             setLoading(false);
         }

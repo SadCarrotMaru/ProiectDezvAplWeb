@@ -1,5 +1,6 @@
 import LoginForm from './components/LoginForm'; 
 import Home from './Home';
+import Utility from './components/Utility';
 import RegistrationForm from './components/RegistrationForm'; 
 import {
     BrowserRouter as Router,
@@ -17,6 +18,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<LoginForm />} />
+                <Route path="/utility" element={<Utility />} />
                 <Route path="/registration" element={<RegistrationForm />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
